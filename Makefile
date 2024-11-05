@@ -12,6 +12,9 @@ lint:
 run:
 	poetry run python employee_review/__init__.py
 
+start:
+	poetry run uvicorn app.main:app --reload
+
 update:
 	poetry update
 
