@@ -7,12 +7,18 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.12"
-torch = "^2.5.1"
 transformers = "^4.46.2"
 huggingface = "^0.0.1"
 fastapi = "^0.115.4"
 uvicorn = "^0.32.0"
-
+torch = "^2.5.1"
+torchvision = "^0.20.1"
+langchain-ollama = "^0.2.0"
+streamlit = "^1.40.1"
+streamlit-chat = "^0.1.1"
+langchain = "^0.3.7"
+langchain-community = "^0.3.7"
+ctransformers = "^0.2.27"
 
 [build-system]
 requires = ["poetry-core"]
