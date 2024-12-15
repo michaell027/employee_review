@@ -1,9 +1,19 @@
 from fastapi import FastAPI
 from .routers import users_router
+from .routers import questions_router
+
 app = FastAPI(
-    title="My FastAPI Application",
-    description="An example FastAPI application using Poetry for dependency management",
+    title="Employee Review Generator",
+    description=(
+        "A FastAPI application designed to assist managers in creating structured employee reviews. "
+        "The application leverages LLaMA-based AI to generate initial questions about an employee based on their "
+        "position."
+        "Managers provide answers to these questions, and the system generates a comprehensive review tailored to the "
+        "input."
+        "Built with Python  , it emphasizes ease of use and efficiency in performance review processes."
+    ),
     version="1.0.0",
 )
 
 app.include_router(users_router)
+app.include_router(questions_router)
