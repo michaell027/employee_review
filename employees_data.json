@@ -1,0 +1,26 @@
+{
+  "employees":
+          [
+            {
+              "id": 1,
+              "name": "John Doe",
+              "email": "john.doe@gmail.com",
+              "position": "Software Engineer",
+              "age": 30
+            },
+            {
+              "id": 2,
+              "name": "Jane Doe",
+              "email": "jane.doe@gmail.com",
+              "position": "Project Manager",
+              "age": 35
+              },
+            {
+              "id": 3,
+              "name": "John Smith",
+              "email": "john.smith@gmail.com",
+              "position": "Software Engineer",
+              "age": 25
+            }
+          ]
+}
