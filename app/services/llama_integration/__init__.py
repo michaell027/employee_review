@@ -19,7 +19,6 @@
 # )
 # print(outputs)
 
-from .client import AIClient
-from .llama_handler import generate_manager_questions
+from . import llama_handler
 
-__all__ = ["AIClient", "generate_manager_questions"]
+__all__ = ["llama_handler"]

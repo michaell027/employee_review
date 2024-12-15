@@ -1,6 +1,7 @@
 import torch
 from transformers import pipeline
 
+
 class AIClient:
     def __init__(self, model_id="meta-llama/Llama-3.2-3B-Instruct"):
         """
