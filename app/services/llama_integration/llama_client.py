@@ -1,5 +1,7 @@
 import requests
 import json
+
+from ...models import LlamaResponse
 from .llama_config import API_URL, MODEL_NAME, HEADERS
 
 
@@ -30,7 +32,7 @@ class LlamaClient:
         try:
             response = requests.post(f"{self.api_url}/api/generate", data=json.dumps(data), headers=self.headers)
             if response.status_code == 200:
-                return response.json()
+                return LlamaResponse(**response.json()).response
             else:
                 raise Exception("LLaMA API is not responding correctly.")
 
