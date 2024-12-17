@@ -15,9 +15,9 @@ def llama_status():
 
 
 @router.get("/llama/questions", tags=["llama"])
-def llama_ask(prompt: str):
+def llama_ask():
     """Ask LLaMA to generate questions."""
     try:
-        return ask_llama_questions(prompt)
+        return ask_llama_questions()
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
