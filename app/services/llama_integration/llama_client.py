@@ -1,5 +1,6 @@
 import requests
 import json
+from .config import API_URL, MODEL_NAME, HEADERS
 
 
 class LlamaClient:
@@ -7,11 +8,9 @@ class LlamaClient:
         """
         Initializes the Llama client with the specified model and configurations.
         """
-        self.api_url = "http://localhost:11434"
-        self.model = "llama3"
-        self.headers = {
-            "Content-Type": "application/json"
-        }
+        self.api_url = API_URL
+        self.model = MODEL_NAME
+        self.headers = HEADERS
 
     def call_model(self, prompt, stream=False):
         """
