@@ -1,6 +1,6 @@
 import requests
 import json
-from .config import API_URL, MODEL_NAME, HEADERS
+from .llama_config import API_URL, MODEL_NAME, HEADERS
 
 
 class LlamaClient:
