@@ -18,10 +18,10 @@ def check_llama_status():
         raise Exception(f"Error connecting to LLaMA API: {e}")
 
 
-def ask_llama_questions():
+def ask_llama_questions(employee_role: str):
     """Send a prompt to LLaMA API and return the generated response."""
     prompt = (
-        "Write 5 questions which you ask a manager about an employee who is a web developer. The questions should "
+        f"Write 5 questions which you ask a manager about an employee who is a {employee_role}. The questions should "
         "be designed to gather enough detail to write a review. Questions need to be simple, short, and general. "
         "Avoid using any specific names, roles, or project titles. These questions will be shown to the manager. "
         "Write it in the JSON format: {questions:[...]}, no additional text.")

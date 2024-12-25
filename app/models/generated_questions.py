@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import List, Optional, Union
+from typing import List, Union, Optional
 import json
 
 
@@ -23,8 +23,8 @@ class GeneratedQuestions:
             raise ValueError("Response must be a JSON string or dictionary.")
 
         questions_list = response_dict.get("questions", [])
-        if not isinstance(questions_list, list):
-            raise ValueError("The 'questions' field must be a list.")
+        if not isinstance(questions_list, list) or not all(isinstance(q, str) for q in questions_list):
+            raise ValueError("The 'questions' field must be a list of strings.")
 
         return GeneratedQuestions(questions=questions_list)
 
