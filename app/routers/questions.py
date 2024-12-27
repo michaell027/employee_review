@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 
-from app.services import check_llama_status, generate_questions_for_specific_employee
+from app.services import check_llama_status, generate_questions_for_specific_employee, ask_llama_questions
 
 router = APIRouter()
 
@@ -18,6 +18,6 @@ def llama_status():
 def llama_ask(employee_id: int):
     """Ask LLaMA to generate questions."""
     try:
-        return generate_questions_for_specific_employee(employee_id)
+        return ask_llama_questions("teacher")
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

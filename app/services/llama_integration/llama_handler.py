@@ -24,7 +24,11 @@ def ask_llama_questions(employee_role: str):
         f"Write 5 questions which you ask a manager about an employee who is a {employee_role}. The questions should "
         "be designed to gather enough detail to write a review. Questions need to be simple, short, and general. "
         "Avoid using any specific names, roles, or project titles. These questions will be shown to the manager. "
-        "Write it in the JSON format: {questions:[...]}, no additional text.")
+        "Write it in the JSON format. Don't add any additional text, output must be only in the JSON format. " 
+        "JSON format must be strictly as follows: "
+        "{questions: [\"[question text]\", \"[question text]\", \"[question text]\", \"[question text]\", "
+        "\"[question text]\"] }. Note: Replace [question text] with the actual question text."
+    )
 
     try:
         response = llama_client.call_model(prompt)
