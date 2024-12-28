@@ -1,6 +1,5 @@
 from fastapi import FastAPI
-from .routers import users_router
-from .routers import questions_router
+from app.routers import users_router, questions_router, review_router
 
 
 app = FastAPI(
@@ -18,3 +17,4 @@ app = FastAPI(
 
 app.include_router(users_router)
 app.include_router(questions_router)
+app.include_router(review_router)
