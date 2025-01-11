@@ -1,3 +1,5 @@
+import json
+import re
 from dataclasses import asdict
 
 import requests
@@ -41,17 +43,42 @@ def ask_llama_questions(employee_role: str):
 
 def generate_review_based_on_evaluation(evaluation: Evaluation):
     """Generate a review based on the evaluation."""
+    try:
+        neutral_evaluation = make_answers_from_evaluation_neutral(evaluation)
+        prompt = (
+            f"Write a review of an employee based on the following evaluation: {asdict(neutral_evaluation)}. "
+            "The review should be written in the second person singular, addressing the employee directly using 'you'. "
+            "The review should be constructive and provide feedback on the employee's performance. "
+            "Write it in the JSON format. Don't add any additional text, output must be only in the JSON format. "
+            "JSON format must be strictly as follows: "
+            "{\"review\": \"[review text]\"}. Note: Replace [review text] with the actual review text."
+        )
+
+        response = llama_client.call_model(prompt)
+        print(response)
+        return Review.from_json(response)
+    except Exception as e:
+        raise Exception(f"Error connecting to LLaMA API: {e}")
+
+
+def make_answers_from_evaluation_neutral(evaluation: Evaluation):
+    """Make the answers in the evaluation neutral."""
     prompt = (
-        f"Write a review of an employee based on the following evaluation: {asdict(evaluation)}. "
-        "The review should be written in the second person singular, addressing the employee directly using 'you'. "
-        "The review should be constructive and provide feedback on the employee's performance. "
-        "Write it in the JSON format. Don't add any additional text, output must be only in the JSON format. "
+        f"Make the answers in the following evaluation neutral: {Evaluation.to_json(evaluation)}. "
+        "The answers should be neutral and not contain any positive or negative sentiment. "
+        "You should only change the answers, not the questions. "
+        "Your output must be strictly in the JSON format. You cannot add any additional text. "
         "JSON format must be strictly as follows: "
-        "{\"review\": \"[review text]\"}. Note: Replace [review text] with the actual review text."
+        "{\"evaluation\": [{\"question\": \"[question text]\", \"answer\": \"[neutral answer]\"}\", "
+        "\"{\"question\": \"[question text]\", \"answer\": \"[neutral answer]\"}\", "
+        "\"{\"question\": \"[question text]\", \"answer\": \"[neutral answer]\"}\", "
+        "\"{\"question\": \"[question text]\", \"answer\": \"[neutral answer]\"}\", "
+        "\"{\"question\": \"[question text]\", \"answer\": \"[neutral answer]\"}\"]}. "
+        "Note: Replace [question text] and [neutral answer] with the actual question text and neutral answer."
     )
 
     try:
         response = llama_client.call_model(prompt)
-        return Review.from_json(response)
+        return Evaluation.from_json(response)
     except Exception as e:
         raise Exception(f"Error connecting to LLaMA API: {e}")

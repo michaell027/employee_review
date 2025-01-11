@@ -21,12 +21,14 @@ class LlamaClient:
             prompt (str): Prompt to send to the AI model.
             stream (bool): Stream the response from the AI model.
         Returns:
-            dict: Response from the AI model.
+            str: Response from the AI model.
         """
         data = {
             "prompt": prompt,
             "stream": stream,
-            "model": self.model
+            "model": self.model,
+            "format": "json",
+            "options": {"temperature": 0.5, "top_p": 0.9, "top_k": 75}
         }
 
         try:

@@ -8,7 +8,7 @@ class GeneratedQuestions:
     questions: List[str]
 
     @staticmethod
-    def from_json(response: Union[str, dict]) -> "GeneratedQuestions":
+    def from_json(response: str) -> "GeneratedQuestions":
         """
         Creates an instance of GeneratedQuestions from a JSON string or dictionary.
         """
@@ -17,8 +17,6 @@ class GeneratedQuestions:
                 response_dict = json.loads(response)
             except json.JSONDecodeError:
                 raise ValueError("Invalid JSON string provided.")
-        elif isinstance(response, dict):
-            response_dict = response
         else:
             raise ValueError("Response must be a JSON string or dictionary.")
 
