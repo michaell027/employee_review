@@ -7,6 +7,17 @@ services:
       - llama
     entrypoint: ['usr/bin/bash', 'pull-llama3.sh']
 
+  fastapi:
+    build:
+      context: .
+      dockerfile: fastapi/Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+
 networks:
   llama:
     driver: bridge
