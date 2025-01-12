@@ -1,5 +1,3 @@
-import json
-import re
 from dataclasses import asdict
 
 import requests
@@ -44,9 +42,8 @@ def ask_llama_questions(employee_role: str):
 def generate_review_based_on_evaluation(evaluation: Evaluation):
     """Generate a review based on the evaluation."""
     try:
-        neutral_evaluation = make_answers_from_evaluation_neutral(evaluation)
         prompt = (
-            f"Write a review of an employee based on the following evaluation: {asdict(neutral_evaluation)}. "
+            f"Write a review of an employee based on the following evaluation: {asdict(evaluation)}. "
             "The review should be written in the second person singular, addressing the employee directly using 'you'. "
             "The review should be constructive and provide feedback on the employee's performance. "
             "Write it in the JSON format. Don't add any additional text, output must be only in the JSON format. "
@@ -55,7 +52,6 @@ def generate_review_based_on_evaluation(evaluation: Evaluation):
         )
 
         response = llama_client.call_model(prompt)
-        print(response)
         return Review.from_json(response)
     except Exception as e:
         raise Exception(f"Error connecting to LLaMA API: {e}")
