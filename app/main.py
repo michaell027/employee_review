@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from app.routers import users_router, questions_router, review_router
-
+from app.utils import global_exception_handler
 
 app = FastAPI(
     title="Employee Review Generator",
@@ -14,6 +14,8 @@ app = FastAPI(
     ),
     version="1.0.0",
 )
+
+app.add_exception_handler(Exception, global_exception_handler)
 
 app.include_router(users_router)
 app.include_router(questions_router)
