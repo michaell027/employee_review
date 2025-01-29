@@ -5,7 +5,7 @@ import logging
 logger = logging.getLogger("uvicorn.error")
 
 
-async def global_exception_handler(request: Request, exc: Exception):
+async def global_exception_handler(_: Request, exc: Exception):
     logger.error(f"Unhandled exception: {exc}")
     return JSONResponse(
         status_code=500,
