@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from ..crud import get_employee_role_by_id
+from app.crud import get_employee_role_by_id
 
 router = APIRouter()
 

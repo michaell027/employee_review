@@ -12,9 +12,6 @@ lint:
 run:
 	poetry run python ai_services/__init__.py
 
-run streamlit:
-	streamlit run ai_services/test2.py
-
 start:
 	poetry run uvicorn app.main:app --reload
 
