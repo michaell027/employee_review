@@ -1,5 +1,5 @@
 from app.utils import SessionLocal
-from models.domain.employee import Employee
+from app.models import Employee
 
 
 def get_employee_by_id(db: SessionLocal, employee_id: int) -> Employee:
