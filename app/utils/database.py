@@ -3,14 +3,14 @@ import os
 from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.engine import URL
-from app.models import Base
-from sqlalchemy.orm import sessionmaker
-
+from sqlalchemy.orm import declarative_base, sessionmaker
 
 load_dotenv()
 
+Base = declarative_base()
+
 DATABASE_URL = URL.create(
-    drivername="postgresql+psycopg",
+    drivername="postgresql+psycopg2",
     username=os.getenv("DB_USER"),
     password=os.getenv("DB_PASSWORD"),
     host=os.getenv("DB_HOST"),
@@ -19,10 +19,5 @@ DATABASE_URL = URL.create(
 )
 
 engine = create_engine(DATABASE_URL)
-
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
 Base.metadata.create_all(bind=engine)
-
-# Session = sessionmaker(bind=engine)
-# session = Session()
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
