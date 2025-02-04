@@ -19,7 +19,7 @@ services:
       - .env
 
   db:
-    image: postgres
+    build: database
     restart: always
     env_file:
       - .env
@@ -29,8 +29,6 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
     ports:
       - "5432:5432"
-    volumes:
-      - ./database/init_db.sql:/docker-entrypoint-initdb.d/init_db.sql
 
 networks:
   llama:
