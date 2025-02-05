@@ -1,32 +1,14 @@
-import json
-from typing import Optional
-
-from ..models import Employee
+from app.models import Employee
+from sqlalchemy.orm import Session
 
 
-def get_employee_role_by_id(employee_id: int) -> Optional[str]:
-    """
-    Retrieve the position (role) of an employee by their ID from a JSON file.
-    """
+def get_employee_by_id(db: Session, employee_id: int) -> Employee:
+    """Gets employee by ID."""
+    return db.query(Employee).filter(Employee.id == employee_id).first()
 
-    file_path = "employees_data.json"
-    try:
-        with open(file_path, "r") as file:
-            data = json.load(file)
 
-        for employee in data.get("employees", []):
-            if employee["id"] == employee_id:
-                employee = Employee(
-                    id=employee["id"],
-                    name=employee["name"],
-                    email=employee["email"],
-                    position=employee["position"],
-                    age=employee["age"]
-                )
-                return employee.position
-    except FileNotFoundError:
-        raise FileNotFoundError(f"File not found: {file_path}")
-    except json.JSONDecodeError:
-        raise ValueError(f"Invalid JSON in file: {file_path}")
+def get_employee_role_by_id(employee_id: int, db: Session) -> str:
+    """Gets employee role by ID."""
+    employee = db.query(Employee.position).filter(Employee.id == employee_id).first()
+    return employee.position if employee else None
 
-    return None
