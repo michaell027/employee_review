@@ -26,14 +26,22 @@ def ask_llama_questions(employee_role: str):
         f"Write 5 questions which you ask a manager about an employee who is a {employee_role}. The questions should "
         "be designed to gather enough detail to write a review. Questions need to be simple, short, and general. "
         "Avoid using any specific names, roles, or project titles. These questions will be shown to the manager. "
-        "Write it in the JSON format. Don't add any additional text, output must be only in the JSON format. "
-        "JSON format must be strictly as follows: "
-        "{\"questions\": [\"[question text]\", \"[question text]\", \"[question text]\", \"[question text]\", "
-        "\"[question text]\"] }. Note: Replace [question text] with the actual question text."
+        "Write it in the JSON format."
     )
 
+    json_format = {
+        "type": "object",
+        "properties": {
+            "questions": {
+                "type": "array",
+                "items": {"type": "string"}
+            }
+        },
+        "required": ["questions"]
+    }
+
     try:
-        response = llama_client.call_model(prompt)
+        response = llama_client.call_model(prompt, json_format)
         return GeneratedQuestions.from_json(response)
     except Exception as e:
         raise Exception(f"Error generating questions from LLaMA API: {e}")
