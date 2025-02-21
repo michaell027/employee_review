@@ -5,6 +5,7 @@ from sqlalchemy.orm import Session
 from app.services import check_llama_status, generate_questions_for_specific_employee
 from app.utils import get_db
 
+
 router = APIRouter()
 
 
@@ -24,3 +25,5 @@ def llama_ask(employee_id: int, db: Session = Depends(get_db)):
         return generate_questions_for_specific_employee(employee_id, db)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+

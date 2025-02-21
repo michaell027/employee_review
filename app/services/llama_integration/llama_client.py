@@ -1,5 +1,4 @@
 import requests
-import json
 
 from ...models import LlamaResponse
 from .llama_config import API_URL, HEADERS
@@ -42,3 +41,5 @@ class LlamaClient:
 
         except requests.exceptions.RequestException as e:
             raise Exception(f"Error connecting to LLaMA API: {e}")
+
+
