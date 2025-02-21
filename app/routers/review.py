@@ -13,4 +13,3 @@ async def generate_review(evaluation: Evaluation):
         return generate_review_from_evaluation(evaluation)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-

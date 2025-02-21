@@ -1,4 +1,4 @@
-from app.models import Employee
+from app.domain.entities import Employee
 from sqlalchemy.orm import Session
 
 
