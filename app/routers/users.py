@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
 from app.crud import get_employee_role_by_id
-from app.utils import get_db
+from app.drivers import get_db
 from fastapi import Depends
 from sqlalchemy.orm import Session
 

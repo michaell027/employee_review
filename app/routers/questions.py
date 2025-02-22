@@ -3,7 +3,7 @@ from fastapi import Depends
 from sqlalchemy.orm import Session
 
 from app.services import check_llama_status, generate_questions_for_specific_employee
-from app.utils import get_db
+from app.drivers import get_db
 
 
 router = APIRouter()
