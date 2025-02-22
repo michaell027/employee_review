@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 
-from app.models import Evaluation
+from app.domain.value_objects import Evaluation
 from app.services import generate_review_from_evaluation
 
 router = APIRouter()

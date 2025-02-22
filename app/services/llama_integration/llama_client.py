@@ -1,6 +1,6 @@
 import requests
 
-from ...models import LlamaResponse
+from app.domain.value_objects import LlamaResponse
 from .llama_config import API_URL, HEADERS
 
 
