@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.routers import users_router, questions_router, review_router
+from app.drivers.rest.routers import llama_router, questions_router, review_router, user_router
 from app.adapters import global_exception_handler
 
 app = FastAPI(
@@ -17,6 +17,7 @@ app = FastAPI(
 
 app.add_exception_handler(Exception, global_exception_handler)
 
-app.include_router(users_router)
+app.include_router(user_router)
 app.include_router(questions_router)
+app.include_router(llama_router)
 app.include_router(review_router)
