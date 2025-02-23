@@ -1,7 +1,7 @@
 import requests
 
 from app.domain.value_objects import LlamaResponse
-from .llama_config import API_URL, HEADERS
+from app.drivers.llama.llama_config import API_URL, HEADERS, MODEL_NAME
 
 
 class LlamaClient:
@@ -10,7 +10,7 @@ class LlamaClient:
         Initializes the Llama client with the specified model and configurations.
         """
         self.api_url = API_URL
-        self.model = "llama3.2"
+        self.model = MODEL_NAME
         self.headers = HEADERS
 
     def call_model(self, prompt, json_format, stream=False):

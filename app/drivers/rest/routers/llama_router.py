@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 
-from app.services import check_llama_status
+from app.drivers.llama import check_llama_status
 
 router = APIRouter()
 

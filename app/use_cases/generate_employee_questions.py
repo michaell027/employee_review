@@ -2,7 +2,7 @@ from app.ports import EmployeeRepository
 from typing import List, Dict
 from sqlalchemy.orm import Session
 
-from app.services import ask_llama_questions
+from app.drivers.llama import ask_llama_questions
 
 
 class GenerateEmployeeQuestionsUseCase:

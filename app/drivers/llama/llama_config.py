@@ -7,7 +7,7 @@ load_dotenv()
 API_URL = os.getenv("LLAMA_API_URL")
 
 # Model Configuration
-MODEL_NAME = "llama3"
+MODEL_NAME = "llama3.2"
 
 # Headers for the API
 HEADERS = {

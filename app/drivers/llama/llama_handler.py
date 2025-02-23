@@ -3,7 +3,7 @@ from dataclasses import asdict
 import requests
 
 from app.domain.value_objects import GeneratedQuestions, Evaluation, Review
-from .llama_client import LlamaClient
+from app.drivers.llama.llama_client import LlamaClient
 
 llama_client = LlamaClient()
 
