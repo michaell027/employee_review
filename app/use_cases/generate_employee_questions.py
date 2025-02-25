@@ -13,5 +13,5 @@ class GenerateEmployeeQuestionsUseCase:
         employee_role = self.employee_repository.get_role_by_id(db, employee_id)
         if employee_role is None:
             raise ValueError(f"Employee with ID {employee_id} not found.")
-        questions = ask_llama_questions(employee_role)
-        return questions
+        generated_questions = ask_llama_questions(employee_role)
+        return generated_questions.questions

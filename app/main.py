@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from app.drivers.rest.routers import llama_router, questions_router, review_router, user_router
 from app.adapters import global_exception_handler
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(
     title="Employee Review Generator",
@@ -13,6 +14,14 @@ app = FastAPI(
         "Built with Python  , it emphasizes ease of use and efficiency in performance review processes."
     ),
     version="1.0.0",
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    # allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 app.add_exception_handler(Exception, global_exception_handler)

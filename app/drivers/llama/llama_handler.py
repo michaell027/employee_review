@@ -55,12 +55,22 @@ def generate_review_based_on_evaluation(evaluation: Evaluation):
             "The review should be written in the second person singular, addressing the employee directly using 'you'. "
             "The review should be constructive and provide feedback on the employee's performance. "
             "Write it in the JSON format. Don't add any additional text, output must be only in the JSON format. "
-            "JSON format must be strictly as follows: "
-            "{\"review\": \"[review text]\"}. Note: Replace [review text] with the actual review text."
         )
 
-        response = llama_client.call_model(prompt)
-        return Review.from_json(response)
+        json_format = {
+            "type": "object",
+            "properties": {
+                "review": {
+                    "type": "string"
+                }
+            },
+            "required": ["evaluation"]
+        }
+
+        response = llama_client.call_model(prompt, json_format)
+        review = Review.from_json(response)
+
+        return review.review.replace("\n", " ").strip()
     except Exception as e:
         raise Exception(f"Error connecting to LLaMA API: {e}")
 
@@ -71,18 +81,32 @@ def make_answers_from_evaluation_neutral(evaluation: Evaluation):
         f"Make the answers in the following evaluation neutral: {Evaluation.to_json(evaluation)}. "
         "The answers should be neutral and not contain any positive or negative sentiment. "
         "You should only change the answers, not the questions. "
-        "Your output must be strictly in the JSON format. You cannot add any additional text. "
-        "JSON format must be strictly as follows: "
-        "{\"evaluation\": [{\"question\": \"[question text]\", \"answer\": \"[neutral answer]\"}\", "
-        "\"{\"question\": \"[question text]\", \"answer\": \"[neutral answer]\"}\", "
-        "\"{\"question\": \"[question text]\", \"answer\": \"[neutral answer]\"}\", "
-        "\"{\"question\": \"[question text]\", \"answer\": \"[neutral answer]\"}\", "
-        "\"{\"question\": \"[question text]\", \"answer\": \"[neutral answer]\"}\"]}. "
-        "Note: Replace [question text] and [neutral answer] with the actual question text and neutral answer."
+        "Modify only the answers that contain expressive language or strong opinions. "
+        "Other questions should be left unchanged. "
+        "Your output must be strictly in the JSON format."
     )
 
+    json_format = {
+        "type": "object",
+        "properties": {
+            "evaluation": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "question": {"type": "string"},
+                        "answer": {"type": "string"}
+                    },
+                    "required": ["question", "answer"]
+                }
+            }
+        },
+        "required": ["evaluation"]
+    }
+
     try:
-        response = llama_client.call_model(prompt)
+        response = llama_client.call_model(prompt, json_format)
+        print(response)
         return Evaluation.from_json(response)
     except Exception as e:
         raise Exception(f"Error connecting to LLaMA API: {e}")
