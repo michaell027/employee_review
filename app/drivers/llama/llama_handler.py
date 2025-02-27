@@ -1,4 +1,5 @@
 from dataclasses import asdict
+from typing import List, Dict
 
 import requests
 
@@ -108,5 +109,25 @@ def make_answers_from_evaluation_neutral(evaluation: Evaluation):
         response = llama_client.call_model(prompt, json_format)
         print(response)
         return Evaluation.from_json(response)
+    except Exception as e:
+        raise Exception(f"Error connecting to LLaMA API: {e}")
+
+
+def ask_llama_to_change_review(messages: List[Dict[str, str]]):
+    """Ask LLaMA to change the review based on the messages."""
+    try:
+        json_format = {
+            "type": "object",
+            "properties": {
+                "review": {
+                    "type": "string"
+                }
+            },
+            "required": ["evaluation"]
+        }
+
+        response = llama_client.call_chat_model(messages, json_format)
+
+        return response
     except Exception as e:
         raise Exception(f"Error connecting to LLaMA API: {e}")
