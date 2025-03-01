@@ -56,17 +56,22 @@ class LlamaClient:
 
         data = {
             "model": self.model,
-            "messages": messages,
-            # [
-            #     {
-            #         "role": "user",
-            #         "content": prompt
-            #     }
-            # ],
+            "messages":
+            # messages,
+                [
+                    {
+                        "content": "You are an AI assistant, which is helping me changing following review based on "
+                                   "the user input.",
+                        "role": "system",
+                    },
+
+                ] + messages,
             "stream": stream,
             # "format": json_format,
             "options": {"temperature": 0.5, "top_p": 0.9, "top_k": 75}
         }
+
+        print("messages", data["messages"])
 
         try:
             response = requests.post(f"{self.api_url}/api/chat", json=data, headers=self.headers)

@@ -16,3 +16,7 @@ class SqlEmployeeRepository(EmployeeRepository):
         """Gets employee role by ID."""
         employee = db.query(Employee.position).filter(Employee.id == employee_id).first()
         return employee.position if employee else None
+
+    def get_all_users(self, db: Session) -> list[Type[Employee]]:
+        """Gets all employees."""
+        return db.query(Employee).all()
