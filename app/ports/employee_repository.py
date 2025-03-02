@@ -16,3 +16,11 @@ class EmployeeRepository(ABC):
     @abstractmethod
     def get_all_users(self, db: Session) -> list[Employee]:
         pass
+
+    @abstractmethod
+    def get_all_managers(self, db: Session) -> list[Employee]:
+        pass
+
+    @abstractmethod
+    def get_all_manager_employees(self, db: Session, manager_id: int) -> list[Employee]:
+        pass

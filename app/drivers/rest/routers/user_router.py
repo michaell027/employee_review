@@ -7,6 +7,8 @@ from app.drivers import get_db
 
 router = APIRouter()
 
+# TODO: Get rid of it
+
 
 def get_employee_role_use_case(
         employee_repository: SqlEmployeeRepository = Depends()

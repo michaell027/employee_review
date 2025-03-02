@@ -2,7 +2,7 @@ from typing import Type
 
 from app.ports import EmployeeRepository
 from app.domain.entities import Employee
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 
 
 class SqlEmployeeRepository(EmployeeRepository):
@@ -17,6 +17,37 @@ class SqlEmployeeRepository(EmployeeRepository):
         employee = db.query(Employee.position).filter(Employee.id == employee_id).first()
         return employee.position if employee else None
 
-    def get_all_users(self, db: Session) -> list[Type[Employee]]:
-        """Gets all employees."""
-        return db.query(Employee).all()
+    def get_all_users(self, db: Session):
+        """Gets all employees with department and manager names."""
+        return (
+            db.query(Employee)
+            .options(
+                joinedload(Employee.department),
+                joinedload(Employee.manager)
+            )
+            .all()
+        )
+
+    def get_all_managers(self, db: Session):
+        """Gets only employees who are managers (i.e., who have subordinates)."""
+        return (
+            db.query(Employee)
+            .filter(Employee.is_manager == True)
+            .options(
+                joinedload(Employee.department),
+                joinedload(Employee.subordinates)
+            )
+            .all()
+        )
+
+    def get_all_manager_employees(self, db: Session, manager_id: int):
+        """Gets all employees who report to a given manager."""
+        return (
+            db.query(Employee)
+            .filter(Employee.manager_id == manager_id)
+            .options(
+                joinedload(Employee.department),
+                joinedload(Employee.manager)
+            )
+            .all()
+        )

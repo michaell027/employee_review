@@ -1,7 +1,8 @@
 from fastapi import FastAPI
-from app.drivers.rest.routers import llama_router, questions_router, review_router, user_router
+from app.drivers.rest.routers import llama_router, questions_router, review_router, user_router, manager_router, employee_router
 from app.adapters import global_exception_handler
 from fastapi.middleware.cors import CORSMiddleware
+
 
 app = FastAPI(
     title="Employee Review Generator",
@@ -30,3 +31,5 @@ app.include_router(user_router)
 app.include_router(questions_router)
 app.include_router(llama_router)
 app.include_router(review_router)
+app.include_router(manager_router)
+app.include_router(employee_router)

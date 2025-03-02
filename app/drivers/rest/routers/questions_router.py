@@ -15,7 +15,7 @@ def get_generate_employee_questions_use_case(
     return GenerateEmployeeQuestionsUseCase(employee_repository)
 
 
-@router.get("/questions", tags=["llama"])
+@router.get("/questions", tags=["questions"])
 def llama_ask(
     employee_id: int,
     db: Session = Depends(get_db),
