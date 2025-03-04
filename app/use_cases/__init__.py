@@ -5,3 +5,4 @@ from .change_review import ChangeReviewUseCase
 from .get_all_users import GetAllUsersUseCase
 from .get_all_managers import GetAllManagersUseCase
 from .get_all_manager_employees import GetAllManagerEmployeesUseCase
+from .get_employee_by_id import GetEmployeeByIdUseCase

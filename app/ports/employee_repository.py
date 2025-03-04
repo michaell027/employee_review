@@ -24,3 +24,7 @@ class EmployeeRepository(ABC):
     @abstractmethod
     def get_all_manager_employees(self, db: Session, manager_id: int) -> list[Employee]:
         pass
+
+    @abstractmethod
+    def get_employee_by_id(self, db: Session, employee_id: int) -> Employee:
+        pass

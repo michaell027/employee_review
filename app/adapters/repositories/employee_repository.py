@@ -42,6 +42,7 @@ class SqlEmployeeRepository(EmployeeRepository):
 
     def get_all_manager_employees(self, db: Session, manager_id: int):
         """Gets all employees who report to a given manager."""
+        # TODO: Check if is manager
         return (
             db.query(Employee)
             .filter(Employee.manager_id == manager_id)
@@ -51,3 +52,11 @@ class SqlEmployeeRepository(EmployeeRepository):
             )
             .all()
         )
+
+    def get_employee_by_id(self, db: Session, employee_id: int):
+        """Gets employee by ID."""
+        return (db.query(Employee).filter(Employee.id == employee_id)
+                .options(
+            joinedload(Employee.department),
+            joinedload(Employee.manager)
+        ).first())

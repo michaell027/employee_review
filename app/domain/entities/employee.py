@@ -1,7 +1,6 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, Date, Boolean
 from sqlalchemy.orm import relationship
 from app.drivers import Base
-from app.domain.entities.department import Department
 
 
 class Employee(Base):

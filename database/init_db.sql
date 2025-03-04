@@ -42,15 +42,13 @@ VALUES ('Sara Wilson', 'sara.wilson@example.com', 'HR Specialist', 2, 2, '1990-1
 INSERT INTO employees (name, email, position, department_id, manager_id, birthday, join_date)
 VALUES ('Tom Lee', 'tom.lee@example.com', 'Marketing Coordinator', 3, 3, '1993-06-25', '2019-05-20');
 
---CREATE TABLE IF NOT EXISTS employees (
---    id INT PRIMARY KEY,
---    name VARCHAR(100),
---    email VARCHAR(100),
---    position VARCHAR(100),
---    age INT
---);
---
---INSERT INTO employees (id, name, email, position, age) VALUES
---(1, 'John Doe', 'john.doe@gmail.com', 'Software Engineer', 30),
---(2, 'Jane Doe', 'jane.doe@gmail.com', 'Project Manager', 35),
---(3, 'John Smith', 'john.smith@gmail.com', 'Software Engineer', 25);
+CREATE TABLE reviews (
+    id SERIAL PRIMARY KEY,
+    employee_id INTEGER REFERENCES employees(id) ON DELETE CASCADE,
+    manager_id INTEGER REFERENCES employees(id) ON DELETE CASCADE,
+    review TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+INSERT INTO reviews (employee_id, manager_id, review, created_at)
+VALUES (1, 2, 'Great performance this year!', NOW());
