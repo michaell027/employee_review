@@ -1,7 +1,6 @@
 from sqlalchemy import Column, Integer, Text, ForeignKey, TIMESTAMP, func
 from sqlalchemy.orm import relationship
 from app.drivers import Base
-from app.domain.entities.employee import Employee
 
 
 class Review(Base):

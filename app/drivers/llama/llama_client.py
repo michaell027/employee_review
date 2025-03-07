@@ -67,7 +67,7 @@ class LlamaClient:
 
                 ] + messages,
             "stream": stream,
-            # "format": json_format,
+            "format": json_format,
             "options": {"temperature": 0.5, "top_p": 0.9, "top_k": 75}
         }
 

@@ -20,12 +20,9 @@ class GetAllManagerEmployeesUseCase:
             {
                 "id": employee.id,
                 "name": employee.name,
-                "email": employee.email,
                 "position": employee.position,
                 "department": employee.department.name if employee.department else None,
                 "manager": employee.manager.name if employee.manager else None,
-                "birthday": employee.birthday,
-                "join_date": employee.join_date,
                 "is_manager": employee.is_manager,
                 "is_review_generated": db.query(Review)
                                        .filter(Review.employee_id == employee.id)

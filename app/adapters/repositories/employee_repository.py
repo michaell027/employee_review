@@ -1,7 +1,8 @@
+from datetime import datetime
 from typing import Type
 
 from app.ports import EmployeeRepository
-from app.domain.entities import Employee
+from app.domain.entities import Employee, Review
 from sqlalchemy.orm import Session, joinedload
 
 
@@ -55,8 +56,36 @@ class SqlEmployeeRepository(EmployeeRepository):
 
     def get_employee_by_id(self, db: Session, employee_id: int):
         """Gets employee by ID."""
-        return (db.query(Employee).filter(Employee.id == employee_id)
-                .options(
-            joinedload(Employee.department),
-            joinedload(Employee.manager)
-        ).first())
+        return (
+            db.query(Employee)
+            .filter(Employee.id == employee_id)
+            .options(
+                joinedload(Employee.department),
+                joinedload(Employee.manager)
+            )
+            .first()
+        )
+
+    def save_employee_review(self, db: Session, employee_id: int, manager_id: int, review_text: str) -> Review:
+        """Saves a review for an employee, ensuring only one review per year per employee-manager pair."""
+
+        current_year = datetime.utcnow().year
+
+        existing_review = (
+            db.query(Review)
+            .filter(
+                Review.employee_id == employee_id,
+                Review.manager_id == manager_id,
+                Review.created_at.between(f"{current_year}-01-01", f"{current_year}-12-31")
+            )
+            .first()
+        )
+
+        if existing_review:
+            raise ValueError("A review already exists for this employee-manager pair in the current year")
+
+        review = Review(employee_id=employee_id, manager_id=manager_id, review=review_text)
+        db.add(review)
+        db.commit()
+        db.refresh(review)
+        return review

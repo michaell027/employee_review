@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from sqlalchemy.orm import Session
 
-from app.domain.entities import Employee
+from app.domain.entities import Employee, Review
 
 
 class EmployeeRepository(ABC):
@@ -27,4 +27,8 @@ class EmployeeRepository(ABC):
 
     @abstractmethod
     def get_employee_by_id(self, db: Session, employee_id: int) -> Employee:
+        pass
+
+    @abstractmethod
+    def save_employee_review(self, db: Session, employee_id: int, manager_id: int, review_text: str) -> Review:
         pass
