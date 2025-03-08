@@ -65,7 +65,7 @@ def generate_review_based_on_evaluation(evaluation: Evaluation):
                     "type": "string"
                 }
             },
-            "required": ["evaluation"]
+            "required": ["review"]
         }
 
         response = llama_client.call_model(prompt, json_format)

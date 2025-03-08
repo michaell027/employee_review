@@ -12,7 +12,7 @@ class MessageModel:
 class LlamaChatResponse:
     model: str
     created_at: str
-    message: MessageModel  # Tu už očakávame MessageModel, ale môžeme spracovať aj dict
+    message: MessageModel
     done_reason: str
     done: bool
     total_duration: int

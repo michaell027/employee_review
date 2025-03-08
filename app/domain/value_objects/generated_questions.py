@@ -2,9 +2,6 @@ from dataclasses import dataclass
 from typing import List, Union, Optional
 import json
 
-# TODO: Delete unnecessary value objects
-
-
 @dataclass
 class GeneratedQuestions:
     questions: List[str]

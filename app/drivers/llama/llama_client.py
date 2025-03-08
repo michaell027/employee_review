@@ -1,8 +1,10 @@
+import json
+
 import requests
 
 from app.domain.value_objects import LlamaResponse
 from app.drivers.llama.llama_config import API_URL, HEADERS, MODEL_NAME
-from app.domain.value_objects import LlamaChatResponse
+from app.domain.value_objects import LlamaChatResponse, Review
 
 
 class LlamaClient:
@@ -51,33 +53,36 @@ class LlamaClient:
             json_format (dict): Format of the response from the AI model.
             stream (bool): Stream the response from the AI model.
         Returns:
-            str: Response from the AI model.
+            str: Extracted 'review' field from the AI model response.
         """
 
         data = {
             "model": self.model,
-            "messages":
-            # messages,
-                [
-                    {
-                        "content": "You are an AI assistant, which is helping me changing following review based on "
-                                   "the user input.",
-                        "role": "system",
-                    },
-
-                ] + messages,
+            "messages": [
+                            {
+                                "content": "You are an AI assistant, which is helping me changing following review "
+                                           "based on"
+                                           "the user input.",
+                                "role": "system",
+                            },
+                        ] + messages,
             "stream": stream,
             "format": json_format,
             "options": {"temperature": 0.5, "top_p": 0.9, "top_k": 75}
         }
 
-        print("messages", data["messages"])
-
         try:
             response = requests.post(f"{self.api_url}/api/chat", json=data, headers=self.headers)
-            print(response.json())
             if response.status_code == 200:
-                return LlamaChatResponse(**response.json()).parsed_response
+                parsed_response = LlamaChatResponse(**response.json()).parsed_response
+
+                try:
+                    review_data = json.loads(parsed_response)
+                except json.JSONDecodeError:
+                    raise ValueError(f"Invalid JSON response from LLaMA API: {parsed_response}")
+
+                return Review.from_json(review_data).review
+
             else:
                 raise Exception(f"LLaMA API is not responding correctly. Status: {response.status_code}")
 
