@@ -11,11 +11,11 @@ Base = declarative_base()
 
 DATABASE_URL = URL.create(
     drivername="postgresql+psycopg2",
-    username=os.getenv("DB_USER"),
-    password=os.getenv("DB_PASSWORD"),
-    host=os.getenv("DB_HOST"),
-    port=int(os.getenv("DB_PORT")),
-    database=os.getenv("DB_NAME")
+    username=os.getenv("SUPABASE_USER"),
+    password=os.getenv("SUPABASE_PASSWORD"),
+    host=os.getenv("SUPABASE_HOST"),
+    port=int(os.getenv("SUPABASE_PORT")),
+    database=os.getenv("SUPABASE_DB_NAME")
 )
 
 engine = create_engine(DATABASE_URL)

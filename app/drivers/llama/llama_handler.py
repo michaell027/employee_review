@@ -113,7 +113,7 @@ def make_answers_from_evaluation_neutral(evaluation: Evaluation):
         raise Exception(f"Error connecting to LLaMA API: {e}")
 
 
-def ask_llama_to_change_review(messages: List[Dict[str, str]]):
+async def ask_llama_to_change_review(messages: List[Dict[str, str]], stream=False):
     """Ask LLaMA to change the review based on the messages."""
     try:
         json_format = {
@@ -123,11 +123,12 @@ def ask_llama_to_change_review(messages: List[Dict[str, str]]):
                     "type": "string"
                 }
             },
-            "required": ["evaluation"]
+            "required": ["review"]
         }
 
-        response = llama_client.call_chat_model(messages, json_format)
-
+        response = await llama_client.call_chat_model(messages, json_format, stream)
         return response
     except Exception as e:
         raise Exception(f"Error connecting to LLaMA API: {e}")
+
+

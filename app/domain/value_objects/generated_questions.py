@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from typing import List, Union, Optional
 import json
 
+
 @dataclass
 class GeneratedQuestions:
     questions: List[str]

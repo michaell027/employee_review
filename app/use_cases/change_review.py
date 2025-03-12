@@ -4,8 +4,15 @@ from app.drivers.llama import ask_llama_to_change_review
 
 
 class ChangeReviewUseCase:
-    def execute(self, messages: List[Dict[str, str]]) -> List[Dict]:
+    async def execute(self, messages: List[Dict[str, str]], stream=False):
         if messages is None:
             raise ValueError(f"Invalid messages: {messages}")
-        generated_review = ask_llama_to_change_review(messages)
-        return generated_review.replace("\n", " ").strip()
+
+        try:
+            # Call LLaMA API with streaming option
+            result = await ask_llama_to_change_review(messages, stream)
+            return result
+        except Exception as e:
+            # Re-raise to be handled by the router
+            raise e
+
