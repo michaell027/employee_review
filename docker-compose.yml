@@ -5,7 +5,7 @@ services:
       - "11434:11434"
     networks:
       - llama
-    entrypoint: ['usr/bin/bash', 'pull-llama3.sh']
+    entrypoint: ['/bin/bash', '/pull-llama3.sh']
 
   fastapi:
     build:
@@ -17,6 +17,8 @@ services:
       - .:/app
     env_file:
       - .env
+    networks:
+      - fastapi
 
   db:
     build: database
@@ -32,4 +34,6 @@ services:
 
 networks:
   llama:
+    driver: bridge
+  fastapi:
     driver: bridge
