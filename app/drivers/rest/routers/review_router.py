@@ -20,7 +20,8 @@ def get_change_review_use_case(
 @router.post("/review", tags=["review"])
 def generate_review(
         evaluation: Evaluation,
-        use_case: GenerateReviewFromEvaluationUseCase = Depends(get_generate_review_from_evaluation_use_case)
+        use_case: GenerateReviewFromEvaluationUseCase =
+        Depends(get_generate_review_from_evaluation_use_case)
 ):
     """Generate a review based on the evaluation."""
     try:
@@ -29,7 +30,7 @@ def generate_review(
         raise HTTPException(status_code=500, detail=str(e))
 
 
-@router.post("/review/change", tags=["llama"])
+@router.post("/review/change", tags=["review"])
 def chat(messages: List[Dict[str, str]], use_case: ChangeReviewUseCase = Depends(get_change_review_use_case)):
     """Handle chat messages with LLaMA API."""
     try:
