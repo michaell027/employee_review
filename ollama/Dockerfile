@@ -1,13 +1,13 @@
 FROM ollama/ollama
 
-# Kópie scriptu na správne miesto v kontajneri
+# Copy script to the container
 COPY ./pull-llama3.sh /pull-llama3.sh
 
-# Zabezpečte, že skript je spustiteľný
+# Ensure the script is executable
 RUN chmod +x /pull-llama3.sh
 
-# Nastavenie predvoleného pracovného adresára
+# Set working directory
 WORKDIR /
 
-# Spustenie skriptu
-ENTRYPOINT ["/pull-llama3.sh"]
+# Use bash to execute the script properly
+ENTRYPOINT ["/bin/bash", "/pull-llama3.sh"]
