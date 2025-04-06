@@ -12,9 +12,13 @@ llama_client = LlamaClient()
 def check_llama_status():
     """Check if LLaMA API is running."""
     try:
-        response = requests.get(llama_client.api_url)
-        if response.status_code == 200:
-            return {"status": "LLaMA is running"}
+        response = llama_client.client.list()
+        print(response)
+        if len(response.models) > 0:
+            return {
+                "status": "ok",
+                "model": response.models[0].model
+            }
         else:
             raise Exception("LLaMA API is not responding correctly.")
     except requests.exceptions.RequestException as e:
